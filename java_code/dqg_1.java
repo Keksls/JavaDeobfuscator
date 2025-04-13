@@ -1,0 +1,164 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Insets;
+import java.util.Stack;
+
+/*
+ * Renamed from dqG
+ */
+public class dqg_1
+implements fyn_0 {
+    private fyw_0 a;
+    private Stack<fyy_0> b = new Stack();
+
+    @Override
+    public void a(fyy_0 fyy_02, fyw_0 fyw_02, fvE fvE2) {
+        this.a = fyw_02;
+        this.b.push(fyy_02);
+        fyy_0 fyy_03 = this.b.peek();
+        fvE fvE3 = fvE2;
+        fqd_0 fqd_02 = (fqd_0)fvE3.getAppearance();
+        fqd_02.setElementMap(fyy_03);
+        fqd_02.setAlignment(frs_0.e);
+        fqd_02.setState("default");
+        fvE2.addBasicElement(fqd_02);
+        fqd_02.onAttributesInitialized();
+        fqn fqn2 = fqn.checkOut();
+        fqn2.setRenderer(fpm_0.b().g().d("fontDefault10"));
+        fqn2.setElementMap(fyy_03);
+        fqd_02.addBasicElement(fqn2);
+        fqn2.onAttributesInitialized();
+        fqn2.onChildrenAdded();
+        fqg_0 fqg_02 = fqg_0.checkOut();
+        fqg_02.setElementMap(fyy_03);
+        fqg_02.setColor(new fyr_0("defaultLightColor"));
+        fqd_02.addBasicElement(fqg_02);
+        fqg_02.onAttributesInitialized();
+        fqg_02.onChildrenAdded();
+        fbf_1 fbf_12 = new fbf_1();
+        fbf_12.onCheckOut();
+        fbf_12.setElementMap(fyy_03);
+        fqd_02.addBasicElement(fbf_12);
+        fbf_12.onAttributesInitialized();
+        fqg_0 fqg_03 = fqg_0.checkOut();
+        fqg_03.setElementMap(fyy_03);
+        fqg_03.setColor(new fyr_0("defaultDarkGreyColor"));
+        fbf_12.addBasicElement(fqg_03);
+        fqg_03.onAttributesInitialized();
+        fqg_03.onChildrenAdded();
+        fbf_12.onChildrenAdded();
+        fbh_1 fbh_12 = new fbh_1();
+        fbh_12.onCheckOut();
+        fbh_12.setElementMap(fyy_03);
+        fbh_12.setColor(new azf_2(1.0f, 1.0f, 1.0f, 0.1f));
+        fbh_12.setInsets(new Insets(1, 1, 1, 1));
+        fqd_02.addBasicElement(fbh_12);
+        fbh_12.onAttributesInitialized();
+        fbh_12.onChildrenAdded();
+        fqd_02.onChildrenAdded();
+        fvE fvE4 = fvE2;
+        fqd_0 fqd_03 = (fqd_0)fvE4.getAppearance();
+        fqd_03.setElementMap(fyy_03);
+        fqd_03.setAlignment(frs_0.e);
+        fqd_03.setState("disabled");
+        fvE2.addBasicElement(fqd_03);
+        fqd_03.onAttributesInitialized();
+        fqg_0 fqg_04 = fqg_0.checkOut();
+        fqg_04.setElementMap(fyy_03);
+        fqg_04.setColor(new fyr_0("defaultDisabledColor"));
+        fqd_03.addBasicElement(fqg_04);
+        fqg_04.onAttributesInitialized();
+        fqg_04.onChildrenAdded();
+        fbf_1 fbf_13 = new fbf_1();
+        fbf_13.onCheckOut();
+        fbf_13.setElementMap(fyy_03);
+        fqd_03.addBasicElement(fbf_13);
+        fbf_13.onAttributesInitialized();
+        fqg_0 fqg_05 = fqg_0.checkOut();
+        fqg_05.setElementMap(fyy_03);
+        fqg_05.setColor(new fyr_0("defaultDarkGreyColor"));
+        fbf_13.addBasicElement(fqg_05);
+        fqg_05.onAttributesInitialized();
+        fqg_05.onChildrenAdded();
+        fbf_13.onChildrenAdded();
+        fbh_1 fbh_13 = new fbh_1();
+        fbh_13.onCheckOut();
+        fbh_13.setElementMap(fyy_03);
+        fbh_13.setColor(new azf_2(1.0f, 1.0f, 1.0f, 0.1f));
+        fbh_13.setInsets(new Insets(1, 1, 1, 1));
+        fqd_03.addBasicElement(fbh_13);
+        fbh_13.onAttributesInitialized();
+        fbh_13.onChildrenAdded();
+        fqd_03.onChildrenAdded();
+        fvE fvE5 = fvE2;
+        fqd_0 fqd_04 = (fqd_0)fvE5.getAppearance();
+        fqd_04.setElementMap(fyy_03);
+        fqd_04.setAlignment(frs_0.e);
+        fqd_04.setState("mouseHover");
+        fvE2.addBasicElement(fqd_04);
+        fqd_04.onAttributesInitialized();
+        fqg_0 fqg_06 = fqg_0.checkOut();
+        fqg_06.setElementMap(fyy_03);
+        fqg_06.setColor(new fyr_0("blackColor"));
+        fqd_04.addBasicElement(fqg_06);
+        fqg_06.onAttributesInitialized();
+        fqg_06.onChildrenAdded();
+        fbf_1 fbf_14 = new fbf_1();
+        fbf_14.onCheckOut();
+        fbf_14.setElementMap(fyy_03);
+        fqd_04.addBasicElement(fbf_14);
+        fbf_14.onAttributesInitialized();
+        fqg_0 fqg_07 = fqg_0.checkOut();
+        fqg_07.setElementMap(fyy_03);
+        fqg_07.setColor(new fyr_0("defaultLightColor"));
+        fbf_14.addBasicElement(fqg_07);
+        fqg_07.onAttributesInitialized();
+        fqg_07.onChildrenAdded();
+        fbf_14.onChildrenAdded();
+        fbh_1 fbh_14 = new fbh_1();
+        fbh_14.onCheckOut();
+        fbh_14.setElementMap(fyy_03);
+        fbh_14.setColor(new fyr_0("pressedBlackColor"));
+        fbh_14.setInsets(new Insets(1, 1, 1, 1));
+        fqd_04.addBasicElement(fbh_14);
+        fbh_14.onAttributesInitialized();
+        fbh_14.onChildrenAdded();
+        fqd_04.onChildrenAdded();
+        fvE fvE6 = fvE2;
+        fqd_0 fqd_05 = (fqd_0)fvE6.getAppearance();
+        fqd_05.setElementMap(fyy_03);
+        fqd_05.setAlignment(frs_0.e);
+        fqd_05.setState("pressed");
+        fvE2.addBasicElement(fqd_05);
+        fqd_05.onAttributesInitialized();
+        fqg_0 fqg_08 = fqg_0.checkOut();
+        fqg_08.setElementMap(fyy_03);
+        fqg_08.setColor(new fyr_0("blackColor"));
+        fqd_05.addBasicElement(fqg_08);
+        fqg_08.onAttributesInitialized();
+        fqg_08.onChildrenAdded();
+        fbf_1 fbf_15 = new fbf_1();
+        fbf_15.onCheckOut();
+        fbf_15.setElementMap(fyy_03);
+        fqd_05.addBasicElement(fbf_15);
+        fbf_15.onAttributesInitialized();
+        fqg_0 fqg_09 = fqg_0.checkOut();
+        fqg_09.setElementMap(fyy_03);
+        fqg_09.setColor(new fyr_0("pressedBlackColor"));
+        fbf_15.addBasicElement(fqg_09);
+        fqg_09.onAttributesInitialized();
+        fqg_09.onChildrenAdded();
+        fbf_15.onChildrenAdded();
+        fbh_1 fbh_15 = new fbh_1();
+        fbh_15.onCheckOut();
+        fbh_15.setElementMap(fyy_03);
+        fbh_15.setColor(new azf_2(1.0f, 1.0f, 1.0f, 0.1f));
+        fbh_15.setInsets(new Insets(1, 1, 1, 1));
+        fqd_05.addBasicElement(fbh_15);
+        fbh_15.onAttributesInitialized();
+        fbh_15.onChildrenAdded();
+        fqd_05.onChildrenAdded();
+    }
+}
+

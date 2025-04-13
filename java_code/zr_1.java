@@ -1,0 +1,56 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.nio.ByteBuffer;
+
+/*
+ * Renamed from zr
+ */
+public class zr_1
+implements gs_0 {
+    public byte a = 0;
+    public float b = 0.0f;
+    public static final int c = 5;
+
+    @Override
+    public boolean a(ByteBuffer byteBuffer) {
+        byteBuffer.put(this.a);
+        byteBuffer.putFloat(this.b);
+        return true;
+    }
+
+    @Override
+    public boolean b(ByteBuffer byteBuffer) {
+        this.a = byteBuffer.get();
+        this.b = byteBuffer.getFloat();
+        return true;
+    }
+
+    @Override
+    public void c() {
+        this.a = 0;
+        this.b = 0.0f;
+    }
+
+    @Override
+    public boolean a(ByteBuffer byteBuffer, int n) {
+        return this.b(byteBuffer);
+    }
+
+    @Override
+    public int b() {
+        return 5;
+    }
+
+    public final String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        this.a(stringBuilder, "");
+        return stringBuilder.toString();
+    }
+
+    public final void a(StringBuilder stringBuilder, String string) {
+        stringBuilder.append(string).append("taxContext=").append(this.a).append('\n');
+        stringBuilder.append(string).append("taxValue=").append(this.b).append('\n');
+    }
+}
+

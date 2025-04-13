@@ -1,0 +1,42 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+/*
+ * Renamed from aSo
+ */
+public class aso_0 {
+    protected byte a;
+    protected byte[] b;
+    protected int[] c;
+    protected int[] d;
+    protected boolean e;
+
+    public byte a() {
+        return this.a;
+    }
+
+    public byte[] b() {
+        return this.b;
+    }
+
+    public int[] c() {
+        return this.c;
+    }
+
+    public int[] d() {
+        return this.d;
+    }
+
+    public boolean e() {
+        return this.e;
+    }
+
+    public void a(asc_2 asc_22) {
+        this.a = asc_22.b();
+        this.b = asc_22.j();
+        this.c = asc_22.k();
+        this.d = asc_22.k();
+        this.e = asc_22.c();
+    }
+}
+

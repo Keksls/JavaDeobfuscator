@@ -1,0 +1,99 @@
+Summary for wakfu-client.jar
+Decompiled with CFR 0.152
+
+
+dao
+----------------------------
+
+b(adt_1 )
+  Unable to fully structure code
+
+
+aza_0
+----------------------------
+
+ak()
+  Recovered potentially malformed switches.  Disable with '--allowmalformedswitch false'
+  Unable to fully structure code
+
+
+aze_0
+----------------------------
+
+u()
+  Unable to fully structure code
+I()
+  Recovered potentially malformed switches.  Disable with '--allowmalformedswitch false'
+  Unable to fully structure code
+
+
+bto_1
+----------------------------
+
+<init>(bSO java.lang.Object )
+  Ignored method signature, as it can't be verified against descriptor
+
+
+ceb_2
+----------------------------
+
+<init>(cdz_1 java.lang.String java.util.List )
+  Ignored method signature, as it can't be verified against descriptor
+
+
+Ou
+----------------------------
+
+b(java.lang.String )
+  Exception : org.benf.cfr.reader.util.ConfusedCFRException: Started 2 blocks at once
+
+
+cko_2
+----------------------------
+
+<init>(ckf_2 java.util.ArrayList int[] int[] int[] int[] fjw_2 )
+  Ignored method signature, as it can't be verified against descriptor
+
+
+eyp_0
+----------------------------
+
+Y()
+  Unable to fully structure code
+
+
+edf_0
+----------------------------
+
+a(boolean java.util.ArrayList java.lang.Byte eze_0 )
+  Unable to fully structure code
+
+
+aan_1
+----------------------------
+
+run()
+  Exception : org.benf.cfr.reader.util.ConfusedCFRException: CONTINUE without a while class org.benf.cfr.reader.bytecode.analysis.parse.statement.AssignmentSimple
+
+
+ags_2
+----------------------------
+
+<init>(agp_2 java.lang.Object )
+  Ignored method signature, as it can't be verified against descriptor
+
+
+abx_1
+----------------------------
+
+<init>(abq_2 java.util.Comparator )
+  Ignored method signature, as it can't be verified against descriptor
+
+
+fld_1
+----------------------------
+
+a(int int int int float[] float[] float[] float[] float[] float[] int )
+  Unable to fully structure code
+b(int int int int float[] float[] float[] float[] float[] float[] int )
+  Unable to fully structure code

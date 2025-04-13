@@ -1,0 +1,9 @@
+langchain
+langchain-community
+langchain-core
+python-dotenv
+langsmith
+langgraph
+ollama
+tqdm
+jpype1

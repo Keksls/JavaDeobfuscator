@@ -1,0 +1,5 @@
+mkdir -p refactor
+rm -f refactor/*.class
+javac -cp ".:javaparser-core-3.26.4.jar:javaparser-symbol-solver-core-3.26.4.jar" refactor/MethodRenamerVisitor.java
+
+jar cf MethodRenamerVisitor.jar refactor/MethodRenamerVisitor.class

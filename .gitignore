@@ -1,0 +1,25 @@
+# Environnement virtuel
+.venv/
+
+# Fichier de configuration
+# .env
+
+# Fichiers de cache Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Fichiers de logs et autres temporaires
+*.log
+*.tmp
+*.swp
+
+# Fichiers de configuration d’IDE
+.vscode/
+.idea/
+
+# Dépendances compilées
+*.so
+*.egg-info/
+dist/
+build/
