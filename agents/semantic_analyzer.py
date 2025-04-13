@@ -2,6 +2,9 @@ import subprocess
 from typing import Dict
 from tqdm import tqdm
 from jpype import JClass
+from langchain_ollama.llms import OllamaLLM
+from langchain.prompts import PromptTemplate
+from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 
 def build_prompt(method_name: str, method_data: Dict) -> str:
     """
@@ -36,24 +39,41 @@ def build_prompt(method_name: str, method_data: Dict) -> str:
 
 def query_mistral_ollama(prompt: str) -> Dict:
     """
-    Envoie le prompt à Ollama avec Mistral et récupère la réponse JSON.
+    Envoie le prompt à Ollama avec Mistral via langchain et récupère la réponse JSON.
     """
-    result = subprocess.run(
-        ["ollama", "run", "mistral", prompt],
-        capture_output=True,
-        text=True
-    )
-    raw_output = result.stdout.strip()
-
-    # Hack : tente d’extraire un JSON valide de la sortie
-    import re, json
-    match = re.search(r'{.*}', raw_output, re.DOTALL)
-    if match:
-        return json.loads(match.group(0))
-    else:
+    try:
+        # Définir le format de sortie attendu
+        proposed_name_schema = ResponseSchema(
+            name="proposed_name", 
+            description="The proposed method name"
+        )
+        reasoning_schema = ResponseSchema(
+            name="reasoning", 
+            description="Reasoning behind the proposed name"
+        )
+        
+        # Configurer le parser pour la sortie structurée
+        output_parser = StructuredOutputParser.from_response_schemas([
+            proposed_name_schema, 
+            reasoning_schema
+        ])
+        format_instructions = output_parser.get_format_instructions()
+        
+        # Initialiser le modèle Ollama
+        model = OllamaLLM(model="mistral")
+        
+        # Ajouter les instructions de formatage au prompt
+        full_prompt = prompt + "\n\n" + format_instructions
+        
+        # Appeler le modèle et traiter la réponse
+        response = model.invoke(full_prompt)
+        return output_parser.parse(response)
+        
+    except Exception as e:
+        print(f"Erreur lors de l'appel à langchain: {e}")
         return {
             "proposed_name": None,
-            "reasoning": "Unable to parse response"
+            "reasoning": f"Error: {str(e)}"
         }
 
 def semantic_analyzer_agent(input_data: Dict) -> Dict:
