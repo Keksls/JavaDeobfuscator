@@ -1,6 +1,6 @@
 package aaa;
 
-public class abb {
+public class SquareCalculator {
 
     public static int square(int x) {
         return x * x;

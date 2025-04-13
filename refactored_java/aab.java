@@ -1,8 +1,8 @@
 package aaa;
 
-public class aab {
+public class MathUtilities {
 
-    public int add(int a, int b) {
+    public int sum(int a, int b) {
         return a + b;
     }
 

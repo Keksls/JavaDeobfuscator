@@ -8,7 +8,9 @@ def build_prompt(method_name: str, method_data: Dict) -> str:
     Génère le prompt à envoyer au LLM pour analyser une méthode.
     """
     prompt = f"""
-    You are analyzing a Java method that has an obfuscated name. Your task is to suggest a clear, self-explanatory name for the method, based on what it does. If method name is a system reserved name, return same name (eg : main)
+    You are analyzing a Java method that has an obfuscated name.
+    Your task is to suggest a clear,self-explanatory name for the method, based on what it does.
+    
 
     ## Method (original name: {method_name})
     ```java
