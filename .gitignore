@@ -2,7 +2,7 @@
 .venv/
 
 # Fichier de configuration
-# .env
+.env
 
 # Fichiers de cache Python
 __pycache__/
