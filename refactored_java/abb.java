@@ -1,3 +1,8 @@
-public static int squareOf(int x) {
-    return x * x;
+package aaa;
+
+public class abb {
+
+    public static int square(int x) {
+        return x * x;
+    }
 }

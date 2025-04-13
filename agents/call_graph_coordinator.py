@@ -1,81 +1,70 @@
-from typing import Dict, List, Set
+from typing import Dict, List
+from jpype import JClass
 
-def build_call_graph(parsed_ast: Dict) -> Dict[str, Set[str]]:
-    """
-    Crée un graphe d'appel à partir de l'AST parsé.
-    """
-    graph = {}
-    for class_data in parsed_ast.values():
-        for method_name, method_info in class_data["methods"].items():
-            graph[method_name] = set(method_info["calls"])
-    return graph
-
-
-def compute_dependency_levels(graph: Dict[str, Set[str]]) -> Dict[str, int]:
-    """
-    Calcule les niveaux de dépendance (N0, N1, ...) pour chaque méthode.
-    """
-    levels = {}
-    unresolved = set(graph.keys())
-
-    while unresolved:
-        progress = False
-        for method in list(unresolved):
-            dependencies = graph[method]
-            unknowns = [dep for dep in dependencies if dep in unresolved]
-
-            if not unknowns:  # toutes les dépendances sont résolues
-                dep_levels = [levels[dep] for dep in dependencies if dep in levels]
-                level = 0 if not dep_levels else max(dep_levels) + 1
-                levels[method] = level
-                unresolved.remove(method)
-                progress = True
-
-        if not progress:
-            # Il y a une boucle ou des références manquantes
-            for method in unresolved:
-                levels[method] = -1  # Marque comme non classifiable
-            break
-
-    return levels
-
-def call_graph_coordinator_agent(input_data: Dict) -> Dict:
+def get_ready_to_process_methods(input_data: Dict) -> Dict:
     """
     Expects:
     {
-        "parsed_ast": { ... },
-        "renamed_methods": [ "Class.method", ... ]
+        "cus_ast": { className: ASTObject (JavaParser CompilationUnit) },
+        "renamed_methods": [ "className.methodName", ... ]
     }
 
     Returns:
     {
-        "call_graph": { ... },
-        "method_levels": { "Class.method": N },
-        "ready_to_process": [ ... ]
+        "ready_to_process": [ "className.methodName", ... ]
     }
     """
-    parsed_ast = input_data["parsed_ast"]
+    cus_ast = input_data["cus_ast"]
     renamed_methods = input_data["renamed_methods"]
+    ready_to_process = []
+    system_reserved_methods = input_data["system_reserved_methods"]
 
-    print(f"[CallGraph] Found {len(parsed_ast)} classes in AST.")
+    MethodDeclaration = JClass("com.github.javaparser.ast.body.MethodDeclaration")
+    MethodCallExpr = JClass("com.github.javaparser.ast.expr.MethodCallExpr")
 
-    graph = build_call_graph(parsed_ast)
-    levels = compute_dependency_levels(graph)
+    # === Étape 1 : construire le graphe des appels internes
+    method_calls_graph: Dict[str, List[str]] = {}
 
-    # Méthodes prêtes à être renommées : toutes leurs dépendances sont renommées
-    ready = [
-        method for method, deps in graph.items()
-        if method not in renamed_methods and all(d in renamed_methods or d not in graph for d in deps)
-    ]
-    method_dict = input_data["method_dict"]
+    for class_name, cu in cus_ast.items():
+        methods = cu.findAll(MethodDeclaration)
 
-    print(f"[CallGraph] Found {len(ready)} methods ready to be renamed.")
+        for method in methods:
+            method_name = str(method.getNameAsString())
+            full_method_name = str(f"{class_name}.{method_name}")
+            if full_method_name in renamed_methods:
+                continue  # skip méthode déjà renommée
+            if method_name in system_reserved_methods:
+                continue  # skip méthode réservée
 
-    return {
-        "call_graph": graph,
-        "method_levels": levels,
-        "ready_to_process": ready,
-        "method_dict": method_dict,
-        "parsed_ast": parsed_ast,
-        "renamed_methods": renamed_methods
-    }
+            called_internal_methods = []
+
+            for call in method.findAll(MethodCallExpr):
+                try:
+                    resolved = call.resolve()
+                    called_class = str(resolved.declaringType().getQualifiedName())
+                    called_method = str(resolved.getName())
+                    called_full = str(f"{called_class}.{called_method}")
+
+                    if called_class in cus_ast:
+                        called_internal_methods.append(called_full)
+                except Exception:
+                    pass  # on ignore les appels non résolus (par défaut, prudence)
+
+            method_calls_graph[full_method_name] = called_internal_methods
+
+    # === Étape 2 : détecter les méthodes prêtes à être renommées
+    for method, called_methods in method_calls_graph.items():
+        # Aucune méthode interne appelée => prête
+        if not called_methods:
+            ready_to_process.append(method)
+            continue
+
+        # Si toutes les méthodes appelées sont déjà renommées
+        if all(m in renamed_methods for m in called_methods):
+            ready_to_process.append(method)
+        else:
+            pass
+
+    input_data["methods_to_rename"] = ready_to_process
+    print(f"[✓] Get ready to process methods terminé : {len(ready_to_process)} méthodes prêtes à être renommées")
+    return input_data

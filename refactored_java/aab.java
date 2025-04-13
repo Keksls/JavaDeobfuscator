@@ -1,7 +1,24 @@
-public int getSmallestSquareRoot(int a, int b) {
-    int e = 0;
-    while (e * e < a) {
-        e++;
+package aaa;
+
+public class aab {
+
+    public int add(int a, int b) {
+        return a + b;
     }
-    return e;
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int findFirstSquareRoot(int a) {
+        int b = 0;
+        while (multiply(b, b) < a) {
+            b++;
+        }
+        return b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
 }

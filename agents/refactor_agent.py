@@ -25,86 +25,50 @@ def refactor_agent(input_data: Dict) -> Dict:
     """
     Expects:
     {
-        "parsed_ast": { ... },
-        "method_dict": { ... },
-        "renaming_map": {
-            "a.b": "calculateTotal",
-            ...
-        }
+        "cus_ast": { ... },
+        "renaming_map": { ... }
     }
 
     Output:
     {
-        "parsed_ast": { ... },
-        "method_dict": { ... }
+        "cus_ast": { ... },
+        "renamed_methods": [ ... ]
     }
     """
-    rename_map = input_data["renaming_map"]
-    method_dict = input_data["method_dict"]
-    parsed_ast = input_data["parsed_ast"]
+    system_reserved_methods = input_data["system_reserved_methods"]
+    cus_ast = input_data["cus_ast"]
+    renaming_map = input_data["renaming_map"]
     renamed_methods = input_data["renamed_methods"]
     
-    # rename method names in parsed AST
-    updated_ast = {}
-    for class_name, class_data in parsed_ast.items():
-        updated_methods = {}
-        for method_name, method_data in class_data["methods"].items():
-            if method_name not in rename_map:
-                updated_methods[method_name] = method_data
-                continue
-            new_method_name = class_name + "." + rename_map.get(method_name)[0]
-            if new_method_name:
-                MethodRenamerVisitor = JClass("refactor.MethodRenamerVisitor")
-                clean_method_name = method_name.split(".")[len(method_name.split(".")) - 1]
-                clean_new_method_name = new_method_name.split(".")[len(new_method_name.split(".")) - 1]
-                visitor = MethodRenamerVisitor(clean_method_name, clean_new_method_name)
-                visitor.visit(method_data, None)
-                updated_methods[new_method_name] = method_data
-                renamed_methods.append(new_method_name)
-        updated_ast[class_name] = {
-            "fields": class_data["fields"],
-            "methods": updated_methods
-        }
-    print(f"Renamed {len(rename_map)} methods in AST.")
+    # rename method names in AST
+    MethodRenamerVisitor = JClass("refactor.MethodRenamerVisitor")
 
-    # # rename method names in parsed AST
-    # updated_ast = {}
-    # for class_name, class_data in parsed_ast.items():
-    #     updated_methods = {}
-    #     for method_name, method_data in class_data["methods"].items():
-    #         if method_name not in rename_map:
-    #             updated_methods[method_name] = method_data
-    #             continue
-    #         new_method_name = class_name + "." + rename_map.get(method_name)[0]
-    #         if new_method_name:
-    #             method_data["name"] = new_method_name
-    #             updated_methods[new_method_name] = method_data
-    #             renamed_methods.append(new_method_name)
-    #             # rename method name in body
-    #             method_data["body"] = rename_method_in_body(method_data["body"], method_name, new_method_name, method_dict)
-    #     updated_ast[class_name] = {
-    #         "fields": class_data["fields"],
-    #         "methods": updated_methods
-    #     }
-    # print(f"Renamed {len(rename_map)} methods in AST.")
-
-    # rename method names in method_dict
-    updated_method_dict = {}
-    for old_method_name, method_data in method_dict.items():
-        if old_method_name not in rename_map:
-            updated_method_dict[old_method_name] = method_data
+    for qualified_name, proposal in renaming_map.items():
+        class_name = proposal["class_name"]
+        old_name = proposal["old_name"]
+        new_name = proposal["proposed_name"]
+        if class_name not in cus_ast:
+            print(f"[!] Classe {class_name} introuvable.")
             continue
-        class_name = old_method_name.split(".")[0]
-        new_method_name = class_name + "." + rename_map.get(old_method_name)[0]
-        if new_method_name:
-            method_data["name"] = new_method_name
-            # rename method name in body
-            method_data["body"] = rename_method_in_body(method_data["body"], old_method_name, new_method_name, method_dict)
-            updated_method_dict[new_method_name] = method_data
-    print(f"Renamed {len(rename_map)} methods in method_dict.")
+        if old_name in system_reserved_methods:
+            print(f"[!] Méthode {old_name} réservée.")
+            continue
 
-    return {
-        "parsed_ast": updated_ast,
-        "method_dict": updated_method_dict,
-        "renamed_methods": renamed_methods
-    }
+        visitor = MethodRenamerVisitor(class_name, old_name, new_name)
+
+        for cu in cus_ast.values():
+            visitor.visit(cu, None)
+            
+        renamed_methods.append(class_name + "." + new_name)
+    
+    input_data["cus_ast"] = cus_ast
+    input_data["renamed_methods"] = renamed_methods
+
+    # debug, print all ast toString
+    for class_name, cu in cus_ast.items():
+        print(f"// ---- {class_name}.java ----")
+        print(cu.toString())
+        print()
+
+    return input_data
+    
